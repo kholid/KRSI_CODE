@@ -1,0 +1,1167 @@
+﻿version 2.05
+platform bioloid2
+o // param_text:University of Indonesia KRSI's Team
+o // param_text:Dharmasraya
+o // param_text:Championship code Version 3.3 Stepping 13
+o // param_text:Updated 30/06/2012 by Nuge
+o // param_text:Changelog:
+o // param_text:-Submenu ready
+o // param_text:- New modular block motion
+o // param_text:- Ready timer based
+o // param_text:- Protocol Ready
+o // param_text:- Newest motion (26-06-2012)
+o // param_text:- Newest Microservo Command
+o // param_text:- Gyroscope Front Back
+o // param_text:- Efficient command
+o main
+o begin
+o call faddr_dest:InitializationGyro
+o load param_dest:var:error param_src:dec_num:3
+o load param_dest:var:UseGyro param_src:bool_num:1
+o call faddr_dest:Set_Timer_Awal
+o load param_dest:var:Force_Return param_src:bool_num:0
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Tegak
+o call faddr_dest:Menu
+o end
+o function faddr_src:Set_Timer_Awal
+o begin
+o load param_dest:cm:33 param_src:timer_num:255
+o compute param_dest:cm:33 param_src:cm:33 aop:+ param_src:timer_num:255
+o compute param_dest:cm:33 param_src:cm:33 aop:+ param_src:timer_num:255
+o compute param_dest:cm:33 param_src:cm:33 aop:+ param_src:timer_num:255
+o compute param_dest:cm:33 param_src:cm:33 aop:+ param_src:timer_num:255
+o compute param_dest:cm:33 param_src:cm:33 aop:+ param_src:timer_num:255
+o compute param_dest:cm:33 param_src:cm:33 aop:+ param_src:timer_num:94
+o end
+o function faddr_src:Menu
+o begin
+o load param_dest:var:UseEndCheck param_src:bool_num:0
+o load param_dest:var:ForceOff param_src:bool_num:0
+o while(1)
+o begin
+o label laddr_src:Main_menu
+o load param_dest:var:Force_Return param_src:bool_num:0
+o call faddr_dest:Save_Timer_Value
+o load param_dest:cm:31 param_src:bool_num:1
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o load param_dest:cm:31 param_src:bool_num:0
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o call faddr_dest:Load_Timer_Value
+o if param_src:cm:32 lop:== param_src:button_num:8 rop:then
+o begin
+o load param_dest:var:Loops param_src:dec_num:1
+o while(1)
+o begin
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o jump laddr_dest:Main_menu
+o end
+o load param_dest:var:Force_Return param_src:bool_num:0
+o if param_src:aux_custom:2 lop:> param_src:dec_num:12 rop:then
+o // param_text:Sound sensor ADC
+o begin
+o load param_dest:var:Flag param_src:dec_num:0
+o call faddr_dest:Main_Course
+o end
+o if param_src:var:Loops lop:>= param_src:dec_num:150 rop:then
+o // param_text:Failsafe = 5,12s (0.128*40)
+o begin
+o load param_dest:var:Flag param_src:dec_num:0
+o call faddr_dest:Main_Course
+o end
+o if param_src:cm:32 lop:== param_src:button_num:1 rop:then
+o begin
+o break
+o end
+o compute param_dest:var:Loops param_src:var:Loops aop:+ param_src:dec_num:1
+o call faddr_dest:Save_Timer_Value
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o call faddr_dest:Load_Timer_Value
+o end
+o end
+o if param_src:cm:32 lop:== param_src:button_num:1 rop:then
+o begin
+o load param_dest:var:Loops param_src:dec_num:1
+o while(1)
+o begin
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o jump laddr_dest:Main_menu
+o end
+o if param_src:aux_custom:2 lop:> param_src:dec_num:12 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:1
+o call faddr_dest:Main_Course
+o end
+o if param_src:var:Loops lop:>= param_src:dec_num:3 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:1
+o call faddr_dest:Main_Course
+o end
+o if param_src:cm:32 lop:== param_src:button_num:1 rop:then
+o begin
+o break
+o end
+o compute param_dest:var:Loops param_src:var:Loops aop:+ param_src:dec_num:1
+o call faddr_dest:Save_Timer_Value
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o call faddr_dest:Load_Timer_Value
+o end
+o end
+o if param_src:cm:32 lop:== param_src:button_num:2 rop:then
+o begin
+o load param_dest:var:Loops param_src:dec_num:1
+o while(1)
+o begin
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o jump laddr_dest:Main_menu
+o end
+o if param_src:aux_custom:2 lop:> param_src:dec_num:12 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:3
+o call faddr_dest:Main_Course
+o end
+o if param_src:var:Loops lop:>= param_src:dec_num:5 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:3
+o call faddr_dest:Main_Course
+o end
+o if param_src:cm:32 lop:== param_src:button_num:1 rop:then
+o begin
+o break
+o end
+o compute param_dest:var:Loops param_src:var:Loops aop:+ param_src:dec_num:1
+o call faddr_dest:Save_Timer_Value
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o call faddr_dest:Load_Timer_Value
+o end
+o end
+o if param_src:cm:32 lop:== param_src:button_num:4 rop:then
+o begin
+o load param_dest:var:Loops param_src:dec_num:1
+o while(1)
+o begin
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o jump laddr_dest:Main_menu
+o end
+o load param_dest:var:Force_Return param_src:bool_num:0
+o if param_src:aux_custom:2 lop:> param_src:dec_num:12 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:2
+o call faddr_dest:Main_Course
+o end
+o if param_src:var:Loops lop:>= param_src:dec_num:5 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:2
+o call faddr_dest:Main_Course
+o end
+o if param_src:cm:32 lop:== param_src:button_num:1 rop:then
+o begin
+o break
+o end
+o compute param_dest:var:Loops param_src:var:Loops aop:+ param_src:dec_num:1
+o call faddr_dest:Save_Timer_Value
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o call faddr_dest:Load_Timer_Value
+o end
+o end
+o if param_src:cm:32 lop:== param_src:button_num:12 rop:then
+o begin
+o load param_dest:var:Loops param_src:dec_num:1
+o while(1)
+o begin
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o jump laddr_dest:Main_menu
+o end
+o if param_src:aux_custom:2 lop:> param_src:dec_num:12 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:1
+o load param_dest:motion:24 param_src:dec_num:1
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o if param_src:var:Loops lop:>= param_src:dec_num:5 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:1
+o load param_dest:motion:24 param_src:dec_num:1
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o if param_src:cm:32 lop:== param_src:button_num:1 rop:then
+o begin
+o break
+o end
+o compute param_dest:var:Loops param_src:var:Loops aop:+ param_src:dec_num:1
+o call faddr_dest:Save_Timer_Value
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o call faddr_dest:Load_Timer_Value
+o end
+- 
+o end
+o if param_src:cm:32 lop:== param_src:button_num:9 rop:then
+o begin
+o load param_dest:var:UseGyro param_src:bool_num:0
+o load param_dest:var:Loops param_src:dec_num:1
+o while(1)
+o begin
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o jump laddr_dest:Main_menu
+o end
+o if param_src:aux_custom:2 lop:> param_src:dec_num:12 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:1
+o load param_dest:motion:24 param_src:dec_num:1
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o if param_src:var:Loops lop:>= param_src:dec_num:5 rop:then
+o begin
+o load param_dest:var:Flag param_src:dec_num:1
+o load param_dest:motion:24 param_src:dec_num:1
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o if param_src:cm:32 lop:== param_src:button_num:1 rop:then
+o begin
+o break
+o end
+o compute param_dest:var:Loops param_src:var:Loops aop:+ param_src:dec_num:1
+o call faddr_dest:Save_Timer_Value
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o call faddr_dest:Load_Timer_Value
+o end
+o if param_src:cm:32 lop:== param_src:button_num:10 rop:then
+o begin
+o load param_dest:var:UseGyro param_src:bool_num:0
+o load param_dest:var:Loops param_src:dec_num:1
+o while(1)
+o begin
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o jump laddr_dest:Main_menu
+o end
+o load param_dest:var:Force_Return param_src:bool_num:0
+o if param_src:aux_custom:2 lop:> param_src:dec_num:12 rop:then
+o // param_text:Sound sensor ADC
+o begin
+o load param_dest:var:Flag param_src:dec_num:0
+o call faddr_dest:Main_Course
+o end
+o if param_src:var:Loops lop:>= param_src:dec_num:56 rop:then
+o // param_text:Failsafe = 5,12s (0.128*40)
+o begin
+o load param_dest:var:Flag param_src:dec_num:0
+o call faddr_dest:Main_Course
+o end
+o if param_src:cm:32 lop:== param_src:button_num:1 rop:then
+o begin
+o break
+o end
+o compute param_dest:var:Loops param_src:var:Loops aop:+ param_src:dec_num:1
+o call faddr_dest:Save_Timer_Value
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o call faddr_dest:Load_Timer_Value
+o end
+o end
+o end
+o end
+o end
+o function faddr_src:Start
+o begin
+o load param_dest:motion:24 param_src:dec_num:1
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Tegak
+o begin
+o load param_dest:motion:24 param_src:dec_num:110
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Siap_Salam
+o begin
+o load param_dest:motion:24 param_src:dec_num:121
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Motion_Wait
+o begin
+o load param_dest:motion:24 param_src:dec_num:-1
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Motion_Exit
+o begin
+o load param_dest:motion:24 param_src:dec_num:0
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Cek_All_Condition
+o begin
+o call faddr_dest:Cek_Timer_Off
+o call faddr_dest:Cek_Force_Off
+o end
+o function faddr_src:Jalan_Kn
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:118
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Jalan_Kr
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:117
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Jalan_Kr_Kr
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:113
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Jalan_Kr_Kn
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:114
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Jalan_Kn_Kr
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:116
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Jalan_Kn_Kn
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:115
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Jalan_Akh_Kr
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:112
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Jalan_Akh_Kn
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:111
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Salam_Pembuka
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:121
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:122
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:123
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Menyemai_Benih
+o begin
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:130
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:131
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Cek_All_Condition
+o load param_dest:motion:24 param_src:dec_num:132
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Cek_All_Condition
+o load param_dest:motion:24 param_src:dec_num:133
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Cek_All_Condition
+o load param_dest:motion:24 param_src:dec_num:134
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:8
+o call faddr_dest:Cek_All_Condition
+o load param_dest:motion:24 param_src:dec_num:135
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:7
+o load param_dest:motion:24 param_src:dec_num:136
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:7
+o load param_dest:motion:24 param_src:dec_num:137
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Bercocok_Tanam
+o begin
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:142
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:7
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:143
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:144
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:7
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:145
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:7
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:146
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Maalow_Buruang
+o begin
+o load param_dest:var:Flag param_src:dec_num:12
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:157
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:12
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:158
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:11
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+x load param_dest:motion:24 param_src:dec_num:159
+x wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+x load param_dest:var:Flag param_src:dec_num:11
+x call faddr_dest:Cek_All_Condition
+x if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+x begin
+x return
+x end
+x load param_dest:motion:24 param_src:dec_num:160
+x wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+x call faddr_dest:Cek_All_Condition
+x if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+x begin
+x return
+x end
+x load param_dest:motion:24 param_src:dec_num:161
+x wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+x load param_dest:var:Flag param_src:dec_num:5
+x call faddr_dest:Cek_All_Condition
+x if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+x begin
+x return
+x end
+o load param_dest:motion:24 param_src:dec_num:162
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:163
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:164
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Menyabik
+o begin
+o load param_dest:var:Flag param_src:dec_num:12
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:173
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:12
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:174
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:5
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:175
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:5
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:176
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:12
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:177
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:5
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:178
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:5
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:179
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o load param_dest:var:Flag param_src:dec_num:5
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:180
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Manampih
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:188
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:189
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:190
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:191
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:16
+o load param_dest:motion:24 param_src:dec_num:192
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:26
+o load param_dest:motion:24 param_src:dec_num:193
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+- 
+o function faddr_src:Manumbuk
+o begin
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:202
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:14
+o load param_dest:motion:24 param_src:dec_num:203
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o call faddr_dest:Cek_All_Condition
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:15
+o load param_dest:motion:24 param_src:dec_num:204
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Salam_Penutup
+o begin
+o load param_dest:var:Flag param_src:dec_num:26
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:216
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:217
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:motion:24 param_src:dec_num:218
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o exit
+o end
+o function faddr_src:Motion_Course
+o begin
+o load param_dest:motion:24 param_src:dec_num:1
+o wait param_src:motion:25 lop:== param_src:bool_num:1 rop:then
+o end
+o function faddr_src:Cek_Timer_Off
+o begin
+o if param_src:cm:33 lop:== param_src:timer_num:0 rop:then
+o begin
+o load param_dest:var:ForceOff param_src:bool_num:1
+o end
+o end
+o function faddr_src:Save_Timer_Value
+o begin
+o load param_dest:var:Timer_Value param_src:cm:33
+o end
+o function faddr_src:Load_Timer_Value
+o begin
+o load param_dest:cm:33 param_src:var:Timer_Value
+o end
+o function faddr_src:Cek_Force_Off
+o begin
+o if param_src:var:ForceOff lop:== param_src:bool_num:1 rop:then
+o begin
+o call faddr_dest:Salam_Penutup
+o exit
+o end
+o end
+o function faddr_src:Main_Course
+o begin
+o if param_src:var:Flag lop:== param_src:dec_num:0 rop:then
+o begin
+o // param_text:Flag Mulai dari salam pembuka
+o jump laddr_dest:Awal_Salam_Pembuka
+o end
+o if param_src:var:Flag lop:== param_src:dec_num:1 rop:then
+o begin
+o // param_text:Flag Mulai Setelah akhir manyabik
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o jump laddr_dest:Dari_Jalan_Setelah_Manyabik
+o end
+o if param_src:var:Flag lop:== param_src:dec_num:2 rop:then
+o begin
+o // param_text:Flag Mulai dari zona tengah
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o jump laddr_dest:Dari_Maalow_Buruang
+o end
+o if param_src:var:Flag lop:== param_src:dec_num:3 rop:then
+o begin
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o // param_text:Flag Mulai dari zona akhir
+o jump laddr_dest:Dari_Manampih
+o end
+o label laddr_src:Awal_Salam_Pembuka
+o load param_dest:var:Flag param_src:dec_num:5
+o call faddr_dest:Salam_Pembuka
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o label laddr_src:Awal_Tanpa_Pembuka
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kn
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kn
+o load param_dest:var:Flag param_src:dec_num:5
+o label laddr_src:Dari_Menyemai_Benih
+o call faddr_dest:Menyemai_Benih
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o label laddr_src:Dari_Bercocok_Tanam
+o load param_dest:var:Flag param_src:dec_num:7
+o call faddr_dest:Bercocok_Tanam
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kn_Kr
+o call faddr_dest:Jalan_Kn_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kn_Kr
+o call faddr_dest:Jalan_Kn_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o label laddr_src:Dari_Maalow_Buruang
+o call faddr_dest:Maalow_Buruang
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kr_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr_Kn
+o call faddr_dest:Jalan_Kr_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr_Kn
+o call faddr_dest:Jalan_Kr_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr_Kn
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o label laddr_src:Dari_Manyabik
+o call faddr_dest:Menyabik
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o label laddr_src:Dari_Jalan_Setelah_Manyabik
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kn
+o call faddr_dest:Jalan_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kn
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kn
+o call faddr_dest:Jalan_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o label laddr_src:Dari_Manampih
+o call faddr_dest:Manampih
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o label laddr_src:Dari_Manumbuk
+o call faddr_dest:Manumbuk
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o load param_dest:var:Flag param_src:dec_num:6
+o call faddr_dest:Jalan_Kr
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o call faddr_dest:Jalan_Akh_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o call faddr_dest:Jalan_Kr
+o call faddr_dest:Jalan_Kn
+o if param_src:var:Force_Return lop:== param_src:bool_num:1 rop:then
+o begin
+o return
+o end
+o label laddr_src:Langsung_Salam_Penutup
+o load param_dest:var:Flag param_src:dec_num:26
+o call faddr_dest:Salam_Penutup
+o end
+- 
+o function faddr_src:Torque_off
+o begin
+o load param_dest:motor:1:24 param_src:bool_num:0
+o load param_dest:motor:2:24 param_src:bool_num:0
+o load param_dest:motor:3:24 param_src:bool_num:0
+o load param_dest:motor:4:24 param_src:bool_num:0
+o load param_dest:motor:5:24 param_src:bool_num:0
+o load param_dest:motor:6:24 param_src:bool_num:0
+o load param_dest:motor:7:24 param_src:bool_num:0
+o load param_dest:motor:8:24 param_src:bool_num:0
+o load param_dest:motor:9:24 param_src:bool_num:0
+o load param_dest:motor:10:24 param_src:bool_num:0
+o load param_dest:motor:11:24 param_src:bool_num:0
+o load param_dest:motor:12:24 param_src:bool_num:0
+o load param_dest:motor:13:24 param_src:bool_num:0
+o load param_dest:motor:14:24 param_src:bool_num:0
+o load param_dest:motor:15:24 param_src:bool_num:0
+o load param_dest:motor:16:24 param_src:bool_num:0
+o load param_dest:motor:17:24 param_src:bool_num:0
+o load param_dest:motor:18:24 param_src:bool_num:0
+o load param_dest:motor:19:24 param_src:bool_num:0
+o load param_dest:motor:20:24 param_src:bool_num:0
+o load param_dest:motor:21:24 param_src:bool_num:0
+o load param_dest:motor:22:24 param_src:bool_num:0
+o end
+- 
+o function faddr_src:InitializationGyro
+o begin
+o load param_dest:var:FBBalCenter param_src:dec_num:0
+o load param_dest:var:RLBalCenter param_src:dec_num:0
+- 
+o for param_var:i param_src:dec_num:1 param_src:dec_num:10
+o begin
+o load param_dest:var:FBBalData param_src:aux_custom:3
+o load param_dest:var:RLBalData param_src:aux_custom:4
+- 
+o compute param_dest:var:FBBalCenter param_src:var:FBBalCenter aop:+ param_src:var:FBBalData
+o compute param_dest:var:RLBalCenter param_src:var:RLBalCenter aop:+ param_src:var:RLBalData
+- 
+o load param_dest:cm:33 param_src:timer_num:1
+o wait param_src:cm:33 lop:> param_src:timer_num:0 rop:then
+o end
+- 
+o compute param_dest:var:FBBalCenter param_src:var:FBBalCenter aop:/ param_src:dec_num:10
+o compute param_dest:var:RLBalCenter param_src:var:RLBalCenter aop:/ param_src:dec_num:10
+- 
+o load param_dest:var:ExistGyro param_src:bool_num:1
+o if param_src:var:FBBalCenter lop:> param_src:dec_num:270 rop:|| param_src:var:FBBalCenter lop:< param_src:dec_num:230 rop:then
+o load param_dest:var:ExistGyro param_src:bool_num:0
+o if param_src:var:RLBalCenter lop:> param_src:dec_num:270 rop:|| param_src:var:RLBalCenter lop:< param_src:dec_num:230 rop:then
+o load param_dest:var:ExistGyro param_src:bool_num:0
+- 
+o load param_dest:var:UseGyro param_src:bool_num:1
+o end
+- 
+o callback
+o begin
+o load param_dest:cm:38 param_src:cm:33
+o if param_src:var:Flag lop:!= param_src:dec_num:0 rop:|| param_src:var:Flag lop:!= param_src:dec_num:1 rop:|| param_src:var:Flag lop:!= param_src:dec_num:2 rop:|| param_src:var:Flag lop:!= param_src:dec_num:3 rop:then
+o begin
+o load param_dest:cm:26 param_src:var:Flag
+o end
+- 
+o if param_src:cm:32 lop:== param_src:button_num:16 rop:then
+o begin
+o load param_dest:var:Force_Return param_src:bool_num:1
+o end
+o if param_src:var:UseEndCheck lop:== param_src:bool_num:1 rop:then
+o begin
+o load param_dest:cm:38 param_src:aux_custom:2
+o load param_dest:cm:38 param_src:var:SoundCheck
+o if param_src:aux_custom:2 lop:< param_src:dec_num:10 rop:then
+o begin
+o compute param_dest:var:SoundCheck param_src:var:SoundCheck aop:+ param_src:dec_num:1
+o end
+o if param_src:aux_custom:2 lop:>= param_src:dec_num:10 rop:then
+o begin
+o load param_dest:var:SoundCheck param_src:dec_num:0
+o end
+o if param_src:var:SoundCheck lop:> param_src:dec_num:5 rop:then
+o begin
+o load param_dest:var:ForceOff param_src:bool_num:1
+o end
+o end
+o if param_src:var:UseGyro lop:== param_src:bool_num:1 rop:&& param_src:var:ExistGyro lop:== param_src:bool_num:1 rop:then
+o begin
+x load param_dest:var:FBBalData param_src:aux_custom:4
+x load param_dest:var:RLBalData param_src:aux_custom:3
+- 
+x compute param_dest:var:FBBalError param_src:var:FBBalData aop:- param_src:var:FBBalCenter
+x compute param_dest:var:RLBalError param_src:var:RLBalData aop:- param_src:var:RLBalCenter
+- 
+x compute param_dest:var:FBBalErrorScaled param_src:var:FBBalError aop:* param_src:var:error
+x compute param_dest:var:RLBalErrorScaled param_src:var:RLBalError aop:* param_src:var:error
+- 
+x compute param_dest:var:FinalFBBal1 param_src:var:FBBalErrorScaled aop:/ param_src:dec_num:54
+x compute param_dest:var:FinalFBBal2 param_src:var:FBBalErrorScaled aop:/ param_src:dec_num:18
+- 
+x compute param_dest:var:FinalRLBal0 param_src:var:RLBalErrorScaled aop:/ param_src:dec_num:10
+x compute param_dest:var:FinalRLBal1 param_src:var:RLBalErrorScaled aop:/ param_src:dec_num:20
+x compute param_dest:motion:141 param_src:dec_num:0 aop:- param_src:var:FinalFBBal1
+x compute param_dest:motion:145 param_src:dec_num:0 aop:- param_src:var:FinalFBBal2
+x compute param_dest:motion:142 param_src:dec_num:0 aop:+ param_src:var:FinalFBBal1
+x compute param_dest:motion:146 param_src:dec_num:0 aop:+ param_src:var:FinalFBBal2
+o end
+o end
+Ql
